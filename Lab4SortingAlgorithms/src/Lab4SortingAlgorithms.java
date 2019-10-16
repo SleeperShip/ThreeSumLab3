@@ -14,7 +14,7 @@ public class Lab4SortingAlgorithms {
     static long MAXVALUE = 2000000000;
     static long MINVALUE = -2000000000;
     static int numberOfTrials = 50;
-    static int MAXINPUTSIZE = (int) Math.pow(2, 18);
+    static int MAXINPUTSIZE = (int) Math.pow(2, 25);
     static int MININPUTSIZE = 2;
 
     // static int SIZEINCREMENT =  10000000; // not using this since we are doubling the size each time
