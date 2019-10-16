@@ -13,7 +13,7 @@ public class ThreeSumLab3{
     static long MAXVALUE = 2000000000;
     static long MINVALUE = -2000000000;
     static int numberOfTrials = 20;
-    static int MAXINPUTSIZE = (int) Math.pow(2, 14);
+    static int MAXINPUTSIZE = (int) Math.pow(2, 15);
     static int MININPUTSIZE = 2;
 
     // static int SIZEINCREMENT =  10000000; // not using this since we are doubling the size each time
@@ -93,8 +93,8 @@ public class ThreeSumLab3{
                 batchElapsedTime = batchElapsedTime + TrialStopwatch.elapsedTime(); // *** uncomment this line if timing trials individually
             }
 
-            batchElapsedTime = BatchStopwatch.elapsedTime(); // *** comment this line if timing trials individually
-            double averageTimePerTrialInBatch = (double) batchElapsedTime / (double) numberOfTrials; // calculate the average time per trial in this batch
+            //batchElapsedTime = BatchStopwatch.elapsedTime(); // *** comment this line if timing trials individually
+             double averageTimePerTrialInBatch = (double) batchElapsedTime / (double) numberOfTrials; // calculate the average time per trial in this batch
 
             /* print data for this size of input */
             resultsWriter.printf("%12d  %15.2f \n", inputSize, averageTimePerTrialInBatch); // might as well make the columns look nice
@@ -166,13 +166,13 @@ public class ThreeSumLab3{
     }
 
     public static int threeSumFast(long[] a) {
-        //long[] arr = mergeSort(a);
-        Arrays.sort(a);
-        int n = a.length;
+        long[] arr = mergeSort(a);
+        //Arrays.sort(a);
+        int n = arr.length;
         int cnt = 0;
         for(int i=0; i<n; i++){
             for(int j = i+1; j<n; j++){
-                if(binarySearch(-(a[i] + a[j]), a) > j){
+                if(binarySearch(-(arr[i] + arr[j]), arr) > j){
                     cnt++;
                 }
             }
@@ -181,38 +181,36 @@ public class ThreeSumLab3{
     }
 
     public static int threeSumFastest(long[] a) {
-        Arrays.sort(a);
+        long[] newList = mergeSort(a);
         //long[] arr = mergeSort(a);
-        int count = 0;
-        int n = a.length;
+        int cnt = 0;
+        int N = a.length;
 
-        for (int i = 0; i < n; i++) {
-            int L = i + 1;
-            int R = a.length - 1;
-
-            if (i > 0 && a[i] == a[i - 1]) {
-                continue;
-            }
-
-            while (L < R) {
-                if (R < a.length - 1 && a[R] == a[R + 1]) {
-                    R--;
-                    continue;
-                }
-
-                if (a[i] + a[L] + a[R] > 0) {
-                    R--;
-                } else if (a[i] + a[L] + a[R] < 0) {
-                    L++;
-                } else {
-                    count++;
-                    L++;
-                    R--;
+        for (int i = 0; i < N; ++i) {
+            //this if statement checks to make sure we don't look at a duplicate index  for i
+            if (i != 0 && newList[i] == newList[i - 1]) continue;
+            //j = i + 1, so points to element after i
+            int j = i + 1;
+            //k = length of list - 1, so point to last element.
+            int k = newList.length - 1;
+            while (j < k) {
+                if (newList[i] + newList[j] + newList[k] == 0) {
+                    cnt++;
+                    ++j;
+                    //avoiding duplicate j indexes
+                    while (j < k && newList[j] == newList[j - 1]) ++j;
+                } else if (newList[i] + newList[j] + newList[k] < 0)//if sum less than 0, move j to the right
+                {
+                    ++j;
+                } else//otherwise, move k to the left
+                {
+                    --k;
                 }
             }
+
         }
 
-        return count;
+        return cnt;
     }
 
     public static int binarySearch(long key, long[] list) {
