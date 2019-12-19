@@ -13,7 +13,7 @@ public class ThreeSumLab3{
     static long MAXVALUE = 2000000000;
     static long MINVALUE = -2000000000;
     static int numberOfTrials = 20;
-    static int MAXINPUTSIZE = (int) Math.pow(2, 15);
+    static int MAXINPUTSIZE = (int) Math.pow(2, 16);
     static int MININPUTSIZE = 2;
 
     // static int SIZEINCREMENT =  10000000; // not using this since we are doubling the size each time
